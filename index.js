@@ -1,6 +1,19 @@
 import express from "express";
 import fs from "fs";
 import cors from "cors";
+import multer from "multer";
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    console.log(file);
+    cb(null, file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const app = express();
 
@@ -22,6 +35,6 @@ app.get("/upload", (req, res) => {
   res.render("upload");
 });
 
-app.post("/upload", (req, res) => {
+app.post("/upload", upload.single("image"), (req, res) => {
   res.send("image uploaded");
 });

@@ -15,3 +15,13 @@ const port = 5000;
 app.listen(port, () => {
   console.log(`http://localhost:${port}`);
 });
+
+app.set("view engine", "ejs");
+
+app.get("/upload", (req, res) => {
+  res.render("upload");
+});
+
+app.post("/upload", (req, res) => {
+  res.send("image uploaded");
+});
